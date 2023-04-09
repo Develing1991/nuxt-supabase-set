@@ -1,7 +1,7 @@
 <template>
   <div>
     <CarCards>
-      <CarCard />
+      <!-- <CarCard /> -->
     </CarCards>
   </div>
 </template>

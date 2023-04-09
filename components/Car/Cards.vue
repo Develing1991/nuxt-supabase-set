@@ -1,7 +1,10 @@
+<script setup lang="ts">
+const { cars } = useCars();
+</script>
 <template>
   <!-- CAR CARDS -->
   <div class="w-full">
-    <slot />
+    <CarCard v-for="car in cars" :key="car.id" :car="car" />
   </div>
   <!-- CAR CARDS -->
 </template>

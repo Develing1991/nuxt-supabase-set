@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "custom",
+  middleware: ["auth"],
 });
 const { makes } = useCars();
 const info = useState<{ [key: string]: string | null }>("adInfo", () => ({

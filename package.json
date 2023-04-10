@@ -14,5 +14,7 @@
     "@vueuse/nuxt": "^9.13.0",
     "nuxt": "^3.3.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@nuxtjs/supabase": "^0.3.0"
+  }
 }

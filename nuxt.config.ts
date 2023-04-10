@@ -6,4 +6,11 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxtjs/supabase",
   ],
+
+  image: {
+    imgix: {
+      baseURL:
+        "https://cknprrbgwjpekvsfucet.supabase.co/storage/v1/object/public/images/",
+    },
+  },
 });

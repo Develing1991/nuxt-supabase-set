@@ -27,7 +27,7 @@ export interface Listing {
   price: string;
   year: number;
   city: string;
-  url: string;
+  image: string;
   seats: number;
   miles: string;
   features: string;

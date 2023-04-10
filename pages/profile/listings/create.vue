@@ -5,6 +5,7 @@ definePageMeta({
 });
 const { makes } = useCars();
 const user = useSupabaseUser();
+const supabase = useSupabaseClient();
 
 const info = useState<Info>("adInfo", () => ({
   make: "",
@@ -16,7 +17,7 @@ const info = useState<Info>("adInfo", () => ({
   seats: "",
   features: "",
   description: "",
-  image: "sfdsd",
+  image: "",
 }));
 const errorMessage = ref("");
 
@@ -42,6 +43,14 @@ const isButtonDisabled = computed(() => {
 });
 
 const handleSubmit = async () => {
+  const fileName = Math.floor(Math.random() * 10000000000000);
+  const { data, error } = await supabase.storage
+    .from("images")
+    .upload("public/" + fileName, info.value.image);
+
+  if (error) {
+    errorMessage.value = "Can not upload Image";
+  }
   const body: Body = {
     ...info.value,
     city: info.value.city.toLowerCase(),
@@ -52,7 +61,7 @@ const handleSubmit = async () => {
     year: parseInt(info.value.year),
     name: `${info.value.make} ${info.value.model}`,
     listerId: user.value?.id,
-    image: "dfsfds",
+    image: data?.path,
   };
   delete body.seats;
 
@@ -64,6 +73,7 @@ const handleSubmit = async () => {
     navigateTo("/profile/listings");
   } catch (error: any) {
     errorMessage.value = error.statusMessage;
+    await supabase.storage.from("images").remove([data?.path as string]);
   }
   useError();
 };
@@ -99,7 +109,7 @@ const handleSubmit = async () => {
         <button
           class="bg-blue-400 text-white rounded py-2 px-7 mt-3"
           :disabled="isButtonDisabled"
-          :class="isButtonDisabled ? 'bg-blue-100' : ''"
+          :class="isButtonDisabled ? 'bg-blue-200' : ''"
           @click="handleSubmit"
         >
           Submit

@@ -5,11 +5,16 @@ const { car } = defineProps<Props>();
 interface Props {
   car: Car & { numberOfSeats: number };
 }
+const config = useRuntimeConfig();
 </script>
 <template>
   <!-- CAR HERO -->
   <div class="mt-10">
-    <NuxtImg :src="car.image" alt="" class="w-full" />
+    <NuxtImg
+      :src="`${config.public.supabase.url}/storage/v1/object/public/images/${car.image}`"
+      alt=""
+      class="w-full"
+    />
     <h1 class="mt-10 text-4xl">{{ car.name }}</h1>
     <div class="text-slate-500 flex text-lg mt-3 border-b pb-5 justify-between">
       <div class="flex">

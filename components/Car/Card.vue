@@ -10,6 +10,7 @@ interface Props {
 
 const emit = defineEmits(["favor"]);
 // const favored = useState(`favored-${car.id}`, () => false);
+const config = useRuntimeConfig();
 </script>
 <template>
   <!-- CAR CARD -->
@@ -23,7 +24,11 @@ const emit = defineEmits(["favor"]);
       @click="emit('favor', car.id)"
     />
     <div class="flex h-full" @click="navigateTo(`/car/${car.name}-${car.id}`)">
-      <NuxtImg :src="car.image" alt="" class="w-[300px] h-full" />
+      <NuxtImg
+        :src="`${config.public.supabase.url}/storage/v1/object/public/images/${car.image}`"
+        alt=""
+        class="w-[300px] h-full"
+      />
       <div class="p-4 flex flex-col">
         <div>
           <h1 class="text-2xl text-blue-700">{{ car.name }}</h1>

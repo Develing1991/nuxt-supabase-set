@@ -99,7 +99,7 @@ const handleSubmit = async () => {
         <button
           class="bg-blue-400 text-white rounded py-2 px-7 mt-3"
           :disabled="isButtonDisabled"
-          :class="isButtonDisabled ? 'bg-blue-200' : ''"
+          :class="isButtonDisabled ? 'bg-blue-100' : ''"
           @click="handleSubmit"
         >
           Submit

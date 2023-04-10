@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import { Listing } from "@/types/Car";
+
 definePageMeta({
   layout: "custom",
   middleware: ["auth"],
 });
-const { listings } = useCars();
+
+const user = useSupabaseUser();
+const { data: listings } = await useFetch<Listing[]>(
+  `/api/car/listings/user/${user.value?.id}`
+);
 </script>
 <template>
   <div>

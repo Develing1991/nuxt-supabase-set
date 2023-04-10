@@ -1,10 +1,13 @@
-export type Cars = Car[];
+export type Cars = Car[] | null;
 export type Features = string[];
 
 export interface Car {
   id: number;
+  year?: number;
   name: string;
-  price: string;
+  price: number;
+  city: string;
+  make: string;
   url: string;
   seats: number;
   miles: string;

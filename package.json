@@ -17,6 +17,7 @@
   "dependencies": {
     "@nuxtjs/supabase": "^0.3.0",
     "@prisma/client": "4.12.0",
+    "joi": "^17.9.1",
     "prisma": "^4.12.0"
   }
 }

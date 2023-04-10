@@ -1,30 +1,47 @@
-import cars from "@/data/cars.json";
-import { Cars } from "~/types/Car";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+interface Filters {
+  [key: string]: any;
+}
 export default defineEventHandler((event) => {
-  cars as Cars;
   if (event.context.params) {
     const { city } = event.context.params;
     const { make, minPrice, maxPrice } = getQuery(event);
 
-    let filteredCars = cars.filter(
-      (car) => car.city.toLowerCase() === city.toLowerCase()
-    );
+    const filters: Filters = {
+      city: city.toLowerCase(),
+    };
 
     if (make) {
-      filteredCars = filteredCars.filter(
-        (car) => car.make.toLowerCase() === make.toString().toLowerCase()
-      );
+      filters.make = make;
     }
+
+    if (minPrice || maxPrice) {
+      filters.price = {};
+    }
+
     if (minPrice) {
-      filteredCars = filteredCars.filter(
-        (car) => car.price >= parseInt(minPrice.toString())
-      );
+      filters.price.gte = parseInt(minPrice.toString());
     }
+
     if (maxPrice) {
-      filteredCars = filteredCars.filter(
-        (car) => car.price <= parseInt(maxPrice.toString())
-      );
+      filters.price.lte = parseInt(maxPrice.toString());
     }
-    return filteredCars;
+
+    return prisma.car.findMany({
+      where: filters,
+    });
+
+    // return prisma.car.findMany({
+    //   where: {
+    //     city: "toronto",
+    //     make: "Toyota",
+    //     price: {
+    //       gte: 50000,
+    //       lte: 145000,
+    //     },
+    //   },
+    // });
   }
 });

@@ -1,10 +1,12 @@
-import cars from "@/data/cars.json";
-import { Cars } from "~/types/Car";
-export default defineEventHandler((event) => {
-  cars as Cars;
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+export default defineEventHandler(async (event) => {
   if (event.context.params) {
     const { id } = event.context.params;
-    const car = cars.find((car) => car.id === parseInt(id));
+    const car = await prisma.car.findUnique({
+      where: { id: parseInt(id) },
+    });
 
     if (!car) {
       throw createError({

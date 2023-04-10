@@ -2,9 +2,8 @@
 import { Listing } from "@/types/Car";
 
 const props = defineProps<Props>();
-interface Props {
-  listing: Listing;
-}
+
+const emits = defineEmits(["deleteClick"]);
 </script>
 <template>
   <div class="shadow rounded overflow-hidden flex justify-between mb-4">
@@ -21,7 +20,18 @@ interface Props {
         :to="`/profile/listings/view/${listing.id}`"
         >View</NuxtLink
       >
-      <p class="text-red-400 cursor-pointer">Delete</p>
+      <p
+        class="text-red-400 cursor-pointer"
+        @click="$emit('deleteClick', listing.id)"
+      >
+        Delete
+      </p>
     </div>
   </div>
 </template>
+
+<script lang="ts">
+interface Props {
+  listing: Listing;
+}
+</script>

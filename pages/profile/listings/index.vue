@@ -7,9 +7,20 @@ definePageMeta({
 });
 
 const user = useSupabaseUser();
-const { data: listings } = await useFetch<Listing[]>(
+
+const { data: listings, refresh } = await useFetch<Listing[]>(
   `/api/car/listings/user/${user.value?.id}`
 );
+
+const handleDelete = async (id: number) => {
+  await $fetch(`/api/car/listings/${id}`, {
+    method: "DELETE",
+  });
+  if (listings.value) {
+    listings.value = listings.value.filter((listing) => listing.id !== id);
+  }
+  // refresh(); many fetch is not good...
+};
 </script>
 <template>
   <div>
@@ -26,6 +37,7 @@ const { data: listings } = await useFetch<Listing[]>(
         v-for="listing in listings"
         :key="listing.id"
         :listing="listing"
+        @delete-click="handleDelete"
       />
     </div>
   </div>

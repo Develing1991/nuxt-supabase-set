@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { Car } from "@/types/Car";
+
 // const { cars } = useCars();
 const route = useRoute();
-const { data: car } = await useFetchCar(route.params.id as string);
+const { data: car } = await useFetchCar<Car>(route.params.id as string);
 const { toTitleCase } = useUtilites();
 useHead({
   title: toTitleCase(route.params.name as string),

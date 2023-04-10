@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { Cars } from "~/types/Car";
+
 const route = useRoute();
 
 // query는 캐시된 데이터를 사용하기 때문에 computed로 사용
 const minPrice = computed(() => route.query.minPrice);
 const maxPrice = computed(() => route.query.maxPrice);
 
-const { data: cars, refresh } = await useFetchCars(
+const { data: cars, refresh } = await useFetchCars<Cars>(
   route.params.city as string,
   {
     minPrice,
@@ -13,6 +15,7 @@ const { data: cars, refresh } = await useFetchCars(
     make: route.params.make as string,
   }
 );
+
 watch(
   () => route.query,
   () => {

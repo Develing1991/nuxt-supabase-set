@@ -3,17 +3,17 @@ import { type Car } from "@/types/Car";
 
 const { car } = defineProps<Props>();
 interface Props {
-  car: Car;
+  car: Car & { numberOfSeats: number };
 }
 </script>
 <template>
   <!-- CAR HERO -->
   <div class="mt-10">
-    <NuxtImg :src="car.url" alt="" class="w-full" />
+    <NuxtImg :src="car.image" alt="" class="w-full" />
     <h1 class="mt-10 text-4xl">{{ car.name }}</h1>
     <div class="text-slate-500 flex text-lg mt-3 border-b pb-5 justify-between">
       <div class="flex">
-        <p class="mr-2">{{ car.seats }} seats</p>
+        <p class="mr-2">{{ car.numberOfSeats }} seats</p>
         <p class="mr-2"></p>
         <p class="mr-2">{{ car.miles }} miles</p>
       </div>

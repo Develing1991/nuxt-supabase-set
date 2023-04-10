@@ -8,7 +8,7 @@ export interface Car {
   price: number;
   city: string;
   make: string;
-  url: string;
+  image: string;
   seats: number;
   miles: string;
   features: Features;
